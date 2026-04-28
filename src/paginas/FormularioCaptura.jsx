@@ -212,7 +212,7 @@ const FormularioCaptura = () => {
 
         {/* Botón Guardar y Limpiar */}
         <div className="pt-2 md:pt-3 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center justify-center md:justify-start gap-4 order-2 md:order-1">
+          <div className="w-full flex flex-col md:flex-row items-center justify-center md:justify-start gap-2 md:gap-4 order-2 md:order-1">
             <button
               type="button"
               onClick={manejarLimpiar}
@@ -221,7 +221,7 @@ const FormularioCaptura = () => {
               <RotateCcw className="w-3.5 h-3.5 md:w-4 md:h-4" />
               <span>Limpiar datos</span>
             </button>
-            <span className={`flex items-center justify-center md:justify-start gap-1.5 text-green-500 font-medium transition-opacity duration-300 ${guardado ? 'opacity-100' : 'opacity-0'}`}>
+            <span className={`flex items-center justify-center gap-1.5 text-green-500 font-medium transition-all duration-300 ${guardado ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-1 md:translate-y-0'}`}>
               <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5" />
               <span className="text-sm md:text-base">Guardados</span>
             </span>
