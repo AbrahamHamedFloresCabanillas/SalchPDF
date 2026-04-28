@@ -172,21 +172,24 @@ const GeneradorDocumentos = () => {
             </div>
           </div>
 
-          {/* Contenedor de Previsualizacion Responsivo (Papel A4) */}
+          {/* Contenedor de Previsualizacion — se ajusta exactamente al documento A4 */}
           <div 
             ref={contenedorRef}
-            className="flex-1 w-full h-full bg-gray-50/80 dark:bg-gray-900/50 rounded-[2rem] border borde-suave dark:border-gray-800 sombra-apple flex justify-center items-center overflow-hidden relative min-h-[500px] md:min-h-0"
+            className="flex-1 w-full h-full flex justify-center items-center min-h-[500px] md:min-h-0"
           >
-            {/* Contenedor estricto que toma el tamano escalado para que Flexbox lo centre */}
-            <div style={{ width: 800 * escala, height: 1131 * escala }} className="relative shrink-0 transition-all duration-200 ease-out">
-              {/* El documento A4 real, posicionado absolutamente y escalado visualmente */}
+            {/* Envoltorio que abraza el documento escalado sin espacio sobrante */}
+            <div 
+              style={{ width: 800 * escala, height: 1131 * escala }} 
+              className="relative shrink-0 transition-all duration-200 ease-out rounded-xl overflow-hidden sombra-apple"
+            >
+              {/* El documento A4 real, escalado visualmente */}
               <div 
                 style={{ 
                   transform: `scale(${escala})`, 
                   width: '800px', 
                   height: '1131px'
                 }}
-                className="absolute top-0 left-0 origin-top-left shadow-2xl bg-white overflow-hidden shrink-0 flex flex-col"
+                className="absolute top-0 left-0 origin-top-left bg-white overflow-hidden shrink-0 flex flex-col"
               >
                 {pestañaActiva === 'cv' && (
                   <CurriculumVitae datos={estadoGlobal} refDocumento={refCv} />
@@ -201,10 +204,11 @@ const GeneradorDocumentos = () => {
         </div>
       </div>
 
-      {/* Notificacion Toast de Advertencia — Estilo Apple con efecto cristal */}
+      {/* Notificacion Toast de Advertencia — Estilo Apple con efecto cristal, responsivo */}
       {avisoVisible && (
         <div
-          className={`fixed bottom-6 left-1/2 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-lg border max-w-md
+          className={`fixed bottom-4 sm:bottom-6 left-1/2 z-50 flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-5 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl shadow-lg border
+            w-[calc(100%-2rem)] sm:w-auto sm:max-w-md
             efecto-cristal borde-suave dark:border-gray-700
             ${avisoSaliendo 
               ? 'animate-[deslizarAbajo_0.3s_ease-in_forwards]' 
@@ -213,14 +217,14 @@ const GeneradorDocumentos = () => {
           style={{ transform: 'translateX(-50%)' }}
           role="alert"
         >
-          <div className="shrink-0 flex items-center justify-center w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-900/30">
-            <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+          <div className="shrink-0 flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-amber-100 dark:bg-amber-900/30">
+            <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600 dark:text-amber-400" />
           </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold text-gray-900 dark:text-white">
+          <div className="flex flex-col min-w-0">
+            <span className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white truncate">
               Datos insuficientes
             </span>
-            <span className="text-xs texto-secundario dark:text-gray-400">
+            <span className="text-[11px] sm:text-xs texto-secundario dark:text-gray-400">
               Completa el formulario antes de descargar.
             </span>
           </div>
