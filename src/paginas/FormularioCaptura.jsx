@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { User, Mail, Phone, MapPin, BookOpen, Briefcase, FileText, CheckCircle2, RotateCcw } from 'lucide-react';
+import { User, Mail, Phone, MapPin, BookOpen, Briefcase, FileText, CheckCircle2, RotateCcw, Save } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import usarDatosPersonales from '../almacenes/usarDatosPersonales';
 import EnvolvedorAnimado from '../componentes/EnvolvedorAnimado';
@@ -228,13 +228,10 @@ const FormularioCaptura = () => {
           </div>
           <button 
             type="submit"
-            className="w-full md:w-auto group relative px-10 py-4 bg-gradient-to-br from-blue-600 to-blue-500 dark:from-blue-500 dark:to-blue-600 text-white rounded-2xl font-semibold tracking-wide hover:shadow-xl hover:shadow-blue-500/30 active:scale-[0.97] transition-all duration-300 order-1 md:order-2 flex items-center justify-center gap-3 cursor-pointer overflow-hidden"
+            className="w-auto px-10 py-3 bg-acento text-white rounded-2xl font-semibold hover:bg-acento-hover active:scale-[0.98] transition-all shadow-lg shadow-blue-500/25 order-1 md:order-2 flex items-center justify-center gap-2 cursor-pointer group"
           >
-            {/* Efecto de brillo sutil */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            
-            <CheckCircle2 className="w-5 h-5 transition-transform group-hover:scale-110" />
-            <span>Guardar Información</span>
+            <Save className="w-5 h-5 group-hover:rotate-6 transition-transform" />
+            <span className="text-sm md:text-base">Guardar Información</span>
           </button>
         </div>
 
