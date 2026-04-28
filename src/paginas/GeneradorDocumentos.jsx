@@ -1,11 +1,22 @@
-import { useRef, useState, useEffect } from 'react';
-import { FileDown, FileText } from 'lucide-react';
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { FileDown, FileText, AlertTriangle } from 'lucide-react';
 import usarDatosPersonales from '../almacenes/usarDatosPersonales';
 import CurriculumVitae from '../componentes/CurriculumVitae';
 import CartaPresentacion from '../componentes/CartaPresentacion';
 import { generarPdf } from '../utilidades/exportarPdf';
 import { generarDocxCv, generarDocxCarta } from '../utilidades/exportarDocx';
 import EnvolvedorAnimado from '../componentes/EnvolvedorAnimado';
+
+/**
+ * Campos obligatorios que deben tener contenido para permitir la descarga.
+ * Se validan contra el estado global del almacen Zustand.
+ */
+const CAMPOS_OBLIGATORIOS = [
+  'nombreCompleto',
+  'correoElectronico',
+  'telefono',
+  'direccion',
+];
 
 const GeneradorDocumentos = () => {
   const [pestañaActiva, asignarPestañaActiva] = useState('cv');
@@ -15,6 +26,11 @@ const GeneradorDocumentos = () => {
   
   const contenedorRef = useRef(null);
   const [escala, asignarEscala] = useState(0.5);
+
+  // Estado para la notificacion de advertencia tipo toast
+  const [avisoVisible, asignarAvisoVisible] = useState(false);
+  const [avisoSaliendo, asignarAvisoSaliendo] = useState(false);
+  const temporizadorRef = useRef(null);
 
   useEffect(() => {
     const observar = new ResizeObserver((entradas) => {
@@ -35,7 +51,56 @@ const GeneradorDocumentos = () => {
     return () => observar.disconnect();
   }, []);
 
+  // Limpiar el temporizador al desmontar el componente
+  useEffect(() => {
+    return () => {
+      if (temporizadorRef.current) {
+        clearTimeout(temporizadorRef.current);
+      }
+    };
+  }, []);
+
+  /**
+   * Verifica si los datos del formulario estan vacios.
+   * Retorna true si NINGUN campo obligatorio tiene contenido.
+   */
+  const datosEstanVacios = useCallback(() => {
+    return CAMPOS_OBLIGATORIOS.every(
+      (campo) => !estadoGlobal[campo] || estadoGlobal[campo].trim() === ''
+    );
+  }, [estadoGlobal]);
+
+  /**
+   * Muestra la notificacion de advertencia con animacion de entrada/salida.
+   * Si ya esta visible, reinicia el temporizador.
+   */
+  const mostrarAviso = useCallback(() => {
+    // Limpiar temporizador anterior si existe
+    if (temporizadorRef.current) {
+      clearTimeout(temporizadorRef.current);
+    }
+
+    asignarAvisoSaliendo(false);
+    asignarAvisoVisible(true);
+
+    // Ocultar automaticamente despues de 4 segundos con animacion de salida
+    temporizadorRef.current = setTimeout(() => {
+      asignarAvisoSaliendo(true);
+      // Esperar a que termine la animacion de salida antes de desmontar
+      setTimeout(() => {
+        asignarAvisoVisible(false);
+        asignarAvisoSaliendo(false);
+      }, 300);
+    }, 4000);
+  }, []);
+
   const manejarDescargaPdf = () => {
+    // Validar que existan datos antes de permitir la descarga
+    if (datosEstanVacios()) {
+      mostrarAviso();
+      return;
+    }
+
     const nombreBase = estadoGlobal.nombreCompleto || 'Usuario';
     const nombreArchivo = pestañaActiva === 'cv' ? `Curriculum Vitae - ${nombreBase}` : `Carta de Presentación - ${nombreBase}`;
     
@@ -45,6 +110,12 @@ const GeneradorDocumentos = () => {
   };
 
   const manejarDescargaDocx = () => {
+    // Validar que existan datos antes de permitir la descarga
+    if (datosEstanVacios()) {
+      mostrarAviso();
+      return;
+    }
+
     const nombreBase = estadoGlobal.nombreCompleto || 'Usuario';
     const nombreArchivo = pestañaActiva === 'cv' ? `Curriculum Vitae - ${nombreBase}` : `Carta de Presentación - ${nombreBase}`;
     
@@ -129,6 +200,32 @@ const GeneradorDocumentos = () => {
 
         </div>
       </div>
+
+      {/* Notificacion Toast de Advertencia — Estilo Apple con efecto cristal */}
+      {avisoVisible && (
+        <div
+          className={`fixed bottom-6 left-1/2 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-lg border max-w-md
+            efecto-cristal borde-suave dark:border-gray-700
+            ${avisoSaliendo 
+              ? 'animate-[deslizarAbajo_0.3s_ease-in_forwards]' 
+              : 'animate-[deslizarArriba_0.4s_ease-out_forwards]'
+            }`}
+          style={{ transform: 'translateX(-50%)' }}
+          role="alert"
+        >
+          <div className="shrink-0 flex items-center justify-center w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-900/30">
+            <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-semibold text-gray-900 dark:text-white">
+              Datos insuficientes
+            </span>
+            <span className="text-xs texto-secundario dark:text-gray-400">
+              Completa el formulario antes de descargar.
+            </span>
+          </div>
+        </div>
+      )}
     </EnvolvedorAnimado>
   );
 };
