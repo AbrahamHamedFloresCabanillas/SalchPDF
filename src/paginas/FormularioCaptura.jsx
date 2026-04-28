@@ -212,7 +212,7 @@ const FormularioCaptura = () => {
 
         {/* Botón Guardar y Limpiar */}
         <div className="pt-2 md:pt-3 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4 order-2 md:order-1">
+          <div className="flex items-center justify-center md:justify-start gap-4 order-2 md:order-1">
             <button
               type="button"
               onClick={manejarLimpiar}
