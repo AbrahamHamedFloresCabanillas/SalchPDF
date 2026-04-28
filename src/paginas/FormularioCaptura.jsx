@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { User, Mail, Phone, MapPin, BookOpen, Briefcase, FileText, CheckCircle2, RotateCcw, Save } from 'lucide-react';
+import { User, Mail, Phone, MapPin, BookOpen, Briefcase, FileText, CheckCircle2, RotateCcw } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import usarDatosPersonales from '../almacenes/usarDatosPersonales';
 import EnvolvedorAnimado from '../componentes/EnvolvedorAnimado';
@@ -228,10 +228,9 @@ const FormularioCaptura = () => {
           </div>
           <button 
             type="submit"
-            className="w-auto px-10 py-3 bg-acento text-white rounded-2xl font-semibold hover:bg-acento-hover active:scale-[0.98] transition-all shadow-lg shadow-blue-500/25 order-1 md:order-2 flex items-center justify-center gap-2 cursor-pointer group"
+            className="w-full md:w-auto px-6 py-2.5 bg-acento text-white rounded-xl md:rounded-full text-sm font-medium hover:bg-acento-hover transition-colors shadow-md shadow-blue-500/20 order-1 md:order-2 flex items-center justify-center cursor-pointer"
           >
-            <Save className="w-5 h-5 group-hover:rotate-6 transition-transform" />
-            <span className="text-sm md:text-base">Guardar Información</span>
+            Guardar Información
           </button>
         </div>
 
