@@ -1,58 +1,88 @@
-# SalchPDF - Generador Profesional de Documentos
+Manual de Usuario y Explicación del Proyecto: SalchPDF
 
-SalchPDF es una herramienta de alta productividad y diseño minimalista enfocada en la generación de Curriculum Vitae y Cartas de Presentación profesionales con previsualización en tiempo real.
+Explicación del Proyecto
 
----
+En este proyecto se desarrolló el sistema SalchPDF el cual fue creado para ayudar a rellenar dos tipos de documentos, curriculum vitae y carta de presentación con la capacidad de descargarlos en dos formatos, .PDF y .DOCX, al entrar lo primero que se puede ver es el formulario a rellenar con datos personales, experiencia, estudios, y notas.
 
-## 1. Explicación del Proyecto
+Posteriormente en la página de Documentos, se puede observar el preview del documento a descargar con los datos guardados precargados, en esta tambien se podra elegir el tipo de documento (curriculum vitae y carta de presentación) y estos se podrán descargar en los dos formatos anteriormente mencionados (.PDF y .DOCX).
 
-### Concepto
-SalchPDF permite a los usuarios concentrarse exclusivamente en su contenido profesional mientras la aplicación se encarga de la estructura y el diseño visual. Inspirado en la estética premium de Apple, ofrece una interfaz fluida y un sistema de exportación de alta fidelidad.
 
-### Características Clave
-- **Previsualización en tiempo real:** Cada cambio en el formulario se refleja instantáneamente.
-- **Exportación Dual:** Generación de archivos **.pdf** (fidelidad total) y **.docx** (editable).
-- **Consistencia Pixel-Perfect:** Sincronización exacta entre la vista web y el documento exportado.
-- **Seguridad de Datos:** Validación inteligente que evita la descarga de documentos incompletos.
-- **Diseño Minimalista:** Interfaz optimizada para modo oscuro y productividad.
 
----
 
-## 2. Arquitectura Técnica
 
-### Stack Tecnológico
-- **Frontend:** React 19 + Vite.
-- **Estado Global:** Zustand (con persistencia en `localStorage`).
-- **Estilos:** Tailwind CSS 4.
-- **Generación de Archivos:** `html2pdf.js` para PDF y `docx` para documentos de Word.
-- **Animaciones:** Framer Motion.
+Por último, está la página de Acerca de, en esta se puede ver información acerca del proyecto.
 
-### Sincronización "Pixel-Perfect"
-El sistema utiliza una técnica de **Inyección de Estilos Computados** que clona el DOM y "hornea" los estilos reales del navegador como estilos inline en el clon antes de la exportación. Esto garantiza que el PDF sea una representación idéntica de la interfaz de usuario.
 
-### Selector de Temas
-El sistema de gestión de temas (`ProveedorTema.jsx`) permite:
-- **Prioridad Manual:** Las selecciones "Claro" u "Oscuro" sobrescriben la preferencia del sistema.
-- **Modo Sistema:** Sincronización automática con el tema del SO mediante observadores `matchMedia`.
-- **Persistencia:** La elección se guarda automáticamente para futuras sesiones.
 
----
 
-## 3. Manual de Usuario
 
-### Paso 1: Entrada de Datos
-En la sección **Formulario**, ingrese su información personal, educación y experiencia. El sistema marcará los campos obligatorios para asegurar un documento profesional.
 
-### Paso 2: Previsualización
-En la sección **Documentos**, visualice sus cambios en tiempo real. Puede alternar entre el Curriculum Vitae y la Carta de Presentación usando el panel lateral.
 
-### Paso 3: Exportación
-- **PDF:** Para envíos oficiales con diseño inalterable.
-- **DOCX:** Para ediciones posteriores en procesadores de texto.
 
-> [!IMPORTANT]
-> **Datos insuficientes:** Si faltan campos básicos (nombre, correo, etc.), el sistema bloqueará la descarga y mostrará una advertencia para evitar documentos vacíos.
 
----
 
-**SalchPDF** - *Simplicidad profesional en cada pixel.*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Como dato extra, también se puede alternar entre temas (claro y oscuro)
+
+
+
+
+
+
+
+
+
+
+
+
+
+Manual de usuario
+
+Paso 1: Entrada de Datos (Sección Formulario)
+Para comenzar, diríjase a la sección Formulario. Aquí encontrará campos diseñados para capturar su información profesional de manera estructurada.
+
+Datos Personales: Ingrese su nombre, correo, teléfono y dirección.
+Perfil y Experiencia: Redacte su biografía profesional y desglose su historial laboral y educativo.
+Validación: El sistema marcará los campos esenciales que son necesarios para una exportación exitosa.
+
+
+Paso 2: Previsualización (Sección Documentos)
+Una vez ingresados los datos, navegue a la sección Documentos.
+
+Alternar Documentos: Use el panel lateral para cambiar entre su Curriculum Vitae y su Carta de Presentación.
+Visualización Dinámica: El documento central se escala automáticamente para adaptarse a su pantalla, manteniendo siempre la proporción A4 profesional.
+
+
+
+
+
+
+
+
+
+Paso 3: Exportación
+Cuando esté satisfecho con el resultado, utilice los botones de descarga:
+
+Descargar PDF: Genera un archivo listo para impresión o envío por correo con máxima fidelidad visual.
+Descargar DOCX: Genera un archivo editable en Microsoft Word u otros editores de texto.
+Protección de "Datos insuficientes"
+Si intenta realizar una descarga sin haber completado la información básica (Nombre, Correo, Teléfono, Dirección), SalchPDF activará un sistema de protección. Aparecerá una notificación visual indicando que los datos son insuficientes, evitando así la generación de documentos profesionales vacíos.
+
+
+
