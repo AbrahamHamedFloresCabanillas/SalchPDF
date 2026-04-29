@@ -8,19 +8,19 @@ const ProveedorTema = ({ children }) => {
     const raiz = window.document.documentElement;
 
     const aplicarTema = (tema) => {
-      raiz.classList.remove('claro', 'dark');
+      raiz.classList.remove('dark');
       
       if (tema === 'sistema') {
         const prefiereOscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        raiz.classList.add(prefiereOscuro ? 'dark' : 'claro');
-      } else {
-        raiz.classList.add(tema);
+        if (prefiereOscuro) raiz.classList.add('dark');
+      } else if (tema === 'oscuro') {
+        raiz.classList.add('dark');
       }
     };
 
     aplicarTema(preferenciaTema);
 
-    // Escuchar cambios en el tema del sistema si la preferencia es "sistema"
+    // Escuchar cambios en el tema del sistema solo si la preferencia es "sistema"
     if (preferenciaTema === 'sistema') {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
       const manejarCambioTemaSistema = () => aplicarTema('sistema');
